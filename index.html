@@ -2,79 +2,39 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lấy Mã Link4m Siêu Tốc</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Link.net - Rút gọn link kiếm tiền</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --bg: #080d14; --card: #0f1722; --cyan: #00e5ff; --dim: #94a3b8; }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { width: 360px; background: var(--card); border-radius: 24px; padding: 30px; border: 1px solid #1e293b; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
-        .header { display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: bold; font-size: 1.2rem; margin-bottom: 25px; color: var(--cyan); }
-        .input-group { background: #0a0f18; border: 1px solid #1e293b; border-radius: 15px; padding: 15px; margin-bottom: 15px; }
-        input { background: transparent; border: none; color: white; width: 100%; text-align: center; outline: none; font-size: 0.9rem; }
-        .btn-main { background: var(--cyan); color: #000; border: none; width: 100%; padding: 16px; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
-        .btn-main:hover { transform: scale(1.02); box-shadow: 0 0 15px var(--cyan); }
-        .result-box { margin-top: 25px; display: none; text-align: left; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .code-display { background: #1a2432; border: 2px dashed var(--cyan); border-radius: 12px; padding: 20px; text-align: center; margin: 10px 0; position: relative; }
-        #codeValue { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; color: #fff; }
-        .btn-copy { background: #1e3a8a; color: white; border: none; width: 100%; padding: 12px; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
-        .guide { font-size: 0.75rem; color: var(--dim); margin-top: 20px; line-height: 1.5; border-top: 1px solid #1e293b; padding-top: 15px; }
+        body { background: #080d14; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .box { width: 400px; background: #0f1722; padding: 30px; border-radius: 20px; border: 1px solid #1e293b; text-align: center; }
+        h1 { color: #00e5ff; margin-bottom: 20px; }
+        input { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #1e293b; background: #0a0f18; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; margin-top: 15px; border-radius: 10px; border: none; background: #00e5ff; font-weight: bold; cursor: pointer; }
+        .result { margin-top: 20px; display: none; background: #1a2432; padding: 15px; border-radius: 10px; border: 1px dashed #00e5ff; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="header"><i class="fas fa-key"></i> <span>LẤY MÃ LINK4M</span></div>
-        <div class="input-group">
-            <input type="text" id="urlInput" placeholder="Dán link Link4m vào đây...">
-        </div>
-        <button class="btn-main" onclick="getCode()"><i class="fas fa-bolt"></i> LẤY MÃ NGAY</button>
-
-        <div id="resultArea" class="result-box">
-            <span style="font-size: 0.8rem; color: var(--dim);">Mã xác nhận của bạn:</span>
-            <div class="code-display">
-                <span id="codeValue">......</span>
-            </div>
-            <button class="btn-copy" onclick="copyCode()"><i class="far fa-copy"></i> SAO CHÉP MÃ</button>
-        </div>
-
-        <div class="guide">
-            <i class="fas fa-info-circle"></i> <b>Hướng dẫn:</b><br>
-            Copy mã bên trên và dán vào ô "Nhập mã" tại trang Link4m để tiếp tục.
+    <div class="box">
+        <h1>Link.net</h1>
+        <input type="text" id="longUrl" placeholder="Dán link gốc vào đây...">
+        <button onclick="shorten()">RÚT GỌN NGAY</button>
+        <div id="res" class="result">
+            <div style="font-size: 0.8rem; color: #94a3b8;">Link của bạn:</div>
+            <b id="shortLink" style="color: #00e5ff;"></b>
         </div>
     </div>
-
     <script>
-        async function getCode() {
-            const url = document.getElementById('urlInput').value;
-            const resArea = document.getElementById('resultArea');
-            const codeVal = document.getElementById('codeValue');
-
-            if(!url) return alert("Vinh ơi, dán link vào đã!");
-
-            resArea.style.display = "block";
-            codeVal.innerText = "Đang quét mã...";
-            
-            try {
-                const response = await fetch(`/api/get-code?url=${encodeURIComponent(url)}`);
-                const data = await response.json();
-
-                if(data.success) {
-                    codeVal.innerText = data.code;
-                } else {
-                    codeVal.innerText = "LỖI RỒI!";
-                    alert(data.message);
-                }
-            } catch (e) {
-                codeVal.innerText = "LỖI KẾT NỐI!";
-            }
-        }
-
-        function copyCode() {
-            const code = document.getElementById('codeValue').innerText;
-            if(code && code !== "Đang quét mã..." && code !== "LỖI RỒI!") {
-                navigator.clipboard.writeText(code);
-                alert("Đã sao chép mã: " + code);
+        async function shorten() {
+            const longUrl = document.getElementById('longUrl').value;
+            const response = await fetch('/api/shorten', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ longUrl })
+            });
+            const data = await response.json();
+            if(data.success) {
+                document.getElementById('res').style.display = 'block';
+                document.getElementById('shortLink').innerText = data.shortUrl;
             }
         }
     </script>
