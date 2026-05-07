@@ -1,36 +1,31 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
-const path = require('path');
-
 const app = express();
+
 app.use(cors());
 app.use(express.static(__dirname));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// API xử lý vượt link siêu tốc
-app.get('/api/bypass', async (req, res) => {
+app.get('/api/get-code', async (req, res) => {
     const targetUrl = req.query.url;
-    if (!targetUrl) return res.json({ success: false });
+    if (!targetUrl) return res.json({ success: false, message: "Thiếu link rồi Vinh!" });
 
     try {
-        // AI gửi request ngầm để lấy link gốc trong 2s
-        const response = await axios.get(`https://api.bypass.vip/bypass?url=${encodeURIComponent(targetUrl)}`, {
-            timeout: 8000
+        // AI thực hiện quét link ngầm để tìm mã xác nhận
+        // Ở đây mình sử dụng API trung gian ổn định để lấy mã từ trang đích
+        const response = await axios.get(`https://api.bypass.vip/get-code?url=${encodeURIComponent(targetUrl)}`, {
+            timeout: 10000 
         });
 
-        if (response.data && response.data.status === "success") {
-            res.json({ success: true, link: response.data.destination });
+        if (response.data && response.data.code) {
+            res.json({ success: true, code: response.data.code });
         } else {
-            res.json({ success: false });
+            res.json({ success: false, message: "Không tìm thấy mã, thử lại nhé!" });
         }
     } catch (error) {
-        res.json({ success: false });
+        res.json({ success: false, message: "Hệ thống bận, hãy thử lại sau 2s!" });
     }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log('AI System Online!'));
+app.listen(PORT, () => console.log(`Hệ thống lấy mã đang chạy trên port ${PORT}`));
