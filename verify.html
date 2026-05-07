@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Xác nhận link - Link.net</title>
+    <style>
+        body { background: #080d14; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
+        .card { width: 350px; background: #0f1722; padding: 25px; border-radius: 20px; display: inline-block; border: 1px solid #1e293b; }
+        .step { background: #1a2432; padding: 15px; border-radius: 10px; text-align: left; font-size: 0.8rem; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #1e293b; background: #0a0f18; color: white; margin-bottom: 10px; box-sizing: border-box; }
+        .btn { background: #22c55e; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>Link.net</h3>
+        <div class="step">
+            1. Truy cập Google.com<br>
+            2. Tìm kiếm từ khóa: <b>"Link.net bypass"</b><br>
+            3. Vào trang đầu tiên và cuộn xuống cuối lấy mã.
+        </div>
+        <input type="text" id="userCode" placeholder="Nhập mã xác nhận tại đây...">
+        <button class="btn" onclick="verify()">TIẾP TỤC</button>
+    </div>
+
+    <script>
+        async function verify() {
+            const id = window.location.pathname.split('/').pop();
+            const userCode = document.getElementById('userCode').value;
+            const res = await fetch('/api/verify', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id, userCode })
+            });
+            const data = await res.json();
+            if(data.success) {
+                window.location.href = data.originalUrl;
+            } else {
+                alert(data.message);
+            }
+        }
+    </script>
+</body>
+</html>
