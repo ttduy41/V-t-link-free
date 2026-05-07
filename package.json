@@ -1,7 +1,7 @@
 {
-  "name": "vượt-link4m-free-v1",
+  "name": "vuot-link4m-free-v1",
   "version": "1.0.0",
-  "description": "AI Bypass Link4m siêu tốc cho Hoàng Vinh",
+  "description": "AI Bypass Link4m by Hoang Vinh",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
