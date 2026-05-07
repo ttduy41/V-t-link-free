@@ -6,324 +6,85 @@
     <title>Vượt Link4m Free V1</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-body: #080d14;
-            --bg-card: #0f1722;
-            --accent-cyan: #00e5ff;
-            --accent-blue: #2563eb;
-            --text-main: #ffffff;
-            --text-dim: #94a3b8;
-            --border-color: #1e293b;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        /* Container chính giống Video */
-        .card {
-            width: 360px;
-            background: var(--bg-card);
-            border-radius: 24px;
-            padding: 25px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        /* Tiêu đề trên cùng */
-        .brand-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-        }
-
-        .brand-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        /* Tag trạng thái xanh lá */
-        .status-container {
-            margin-bottom: 20px;
-        }
-
-        .status-tag {
-            background: rgba(34, 197, 94, 0.1);
-            color: #4ade80;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .dot {
-            height: 8px;
-            width: 8px;
-            background-color: #4ade80;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 10px #4ade80;
-        }
-
-        /* Ô nhập link */
-        .input-wrapper {
-            background: #0a0f18;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 12px;
-        }
-
-        input {
-            background: transparent;
-            border: none;
-            color: var(--accent-cyan);
-            width: 100%;
-            text-align: center;
-            font-size: 0.95rem;
-            font-family: 'monospace';
-            outline: none;
-        }
-
-        input::placeholder {
-            color: #475569;
-        }
-
-        /* Nút Dán Link & Vượt */
-        .btn-action {
-            background: var(--accent-cyan);
-            color: #000;
-            border: none;
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: 0.3s;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .btn-action:hover {
-            opacity: 0.9;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
-        }
-
-        /* Khu vực hiển thị kết quả */
-        #result-box {
-            display: none; /* Ẩn mặc định */
-            animation: fadeIn 0.5s ease;
-        }
-
-        .result-label {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            text-align: left;
-            margin-bottom: 8px;
-            margin-left: 5px;
-        }
-
-        .result-container {
-            background: #0a0f18;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            margin-bottom: 12px;
-        }
-
-        .link-text {
-            flex: 1;
-            font-size: 0.85rem;
-            color: var(--accent-cyan);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .copy-icon {
-            color: var(--accent-cyan);
-            cursor: pointer;
-            padding: 5px;
-            transition: 0.2s;
-        }
-
-        .copy-icon:hover {
-            transform: scale(1.2);
-        }
-
-        /* Nút Truy Cập Link màu xanh dương */
-        .btn-visit {
-            background: var(--accent-blue);
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-
-        .btn-visit:hover {
-            background: #1d4ed8;
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
-        }
-
-        /* Hướng dẫn sử dụng */
-        .guide {
-            margin-top: 25px;
-            text-align: left;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-        }
-
-        .guide-title {
-            color: #f97316;
-            font-size: 0.8rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .step {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-bottom: 6px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .step span {
-            color: #f97316;
-            font-weight: bold;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        :root { --bg: #080d14; --card: #0f1722; --cyan: #00e5ff; --blue: #1e3a8a; --dim: #94a3b8; }
+        body { background: var(--bg); color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { width: 350px; background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid #1e293b; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; }
+        .status { background: rgba(34, 197, 94, 0.1); color: #4ade80; padding: 8px 15px; border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(34, 197, 94, 0.3); margin-bottom: 20px; display: inline-block; }
+        .input-box { background: #0a0f18; border: 1px solid #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 10px; }
+        input { background: transparent; border: none; color: var(--cyan); width: 100%; text-align: center; outline: none; font-size: 0.9rem; }
+        .btn-bypass { background: var(--cyan); color: black; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.9rem; }
+        .res-area { text-align: left; margin-top: 20px; }
+        .res-box { background: #0a0f18; border: 1px solid #1e293b; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
+        #linkRes { color: var(--cyan); font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+        .btn-visit { background: var(--blue); color: white; text-decoration: none; display: block; padding: 15px; border-radius: 12px; font-weight: bold; text-align: center; opacity: 0.5; pointer-events: none; transition: 0.3s; }
+        .guide { text-align: left; border-top: 1px solid #1e293b; margin-top: 20px; padding-top: 15px; }
+        .guide b { color: #f97316; font-size: 0.8rem; }
+        .step { font-size: 0.7rem; color: var(--dim); margin-top: 5px; }
     </style>
 </head>
 <body>
-
 <div class="card">
-    <div class="brand-header">
-        <div class="brand-title">Vượt Link4m Free V1</div>
-        <i class="fas fa-bolt" style="color: var(--accent-cyan);"></i>
-    </div>
-
-    <div class="status-container">
-        <div class="status-tag">
-            <span class="dot"></span> Xác thực thành công ● Link hợp lệ
+    <div class="header"><span>Vượt Link4m Free V1</span><i class="fas fa-bolt" style="color:var(--cyan)"></i></div>
+    <div class="status">● Xác thực thành công ● Link hợp lệ</div>
+    <div class="input-box"><input type="text" id="urlInput" placeholder="DÁN LINK TẠI ĐÂY"></div>
+    <button class="btn-bypass" onclick="handleBypass()"><i class="fas fa-magic"></i> DÁN LINK & VƯỢT NGAY</button>
+    
+    <div class="res-area">
+        <div style="font-size:0.7rem; color:var(--dim)">Link đã vượt thành công:</div>
+        <div class="res-box">
+            <span id="linkRes">Đang đợi link...</span>
+            <i class="fas fa-copy" onclick="copy()" style="color:var(--cyan); cursor:pointer; margin-left:10px;"></i>
         </div>
-    </div>
-
-    <div class="input-wrapper">
-        <input type="text" id="linkInput" placeholder="DÁN LINK LINK4M VÀO ĐÂY...">
-    </div>
-
-    <button class="btn-action" onclick="startBypass()">
-        <i class="fas fa-magic"></i> Dán Link & Vượt Ngay
-    </button>
-
-    <div id="result-box">
-        <div class="result-label">Link đã vượt thành công:</div>
-        <div class="result-container">
-            <div id="finalLink" class="link-text">Đang xử lý...</div>
-            <i class="fas fa-copy copy-icon" title="Sao chép" onclick="copyLink()"></i>
-        </div>
-        
-        <a id="visitBtn" href="#" target="_blank" class="btn-visit">
-            TRUY CẬP LINK GỐC
-        </a>
+        <a id="visitBtn" href="#" target="_blank" class="btn-visit">TRUY CẬP LINK GỐC</a>
     </div>
 
     <div class="guide">
-        <div class="guide-title">
-            <i class="fas fa-info-circle"></i> HƯỚNG DẪN SỬ DỤNG
-        </div>
-        <div class="step"><span>01</span> Mở và dán link cần vượt vào ô nhập liệu.</div>
-        <div class="step"><span>02</span> Đợi AI xử lý hệ thống trong 2s-3s.</div>
-        <div class="step"><span>03</span> Nhấn Truy Cập Link để nhận kết quả.</div>
+        <b><i class="fas fa-info-circle"></i> HƯỚNG DẪN SỬ DỤNG</b>
+        <div class="step">01. Dán link cần vượt vào ô nhập liệu.</div>
+        <div class="step">02. Đợi AI xử lý hệ thống trong 2s-3s.</div>
+        <div class="step">03. Nhấn Truy Cập Link để nhận kết quả.</div>
     </div>
 </div>
 
 <script>
-    async function startBypass() {
-        const input = document.getElementById('linkInput');
-        const resultBox = document.getElementById('result-box');
-        const finalLinkTxt = document.getElementById('finalLink');
+    async function handleBypass() {
+        const input = document.getElementById('urlInput').value;
+        const resTxt = document.getElementById('linkRes');
         const visitBtn = document.getElementById('visitBtn');
 
-        if (!input.value.includes('link4m')) {
-            alert("Vui lòng dán đúng link Link4m!");
-            return;
-        }
+        if(!input) return alert("Vinh ơi dán link vào đã!");
 
-        // Hiện box kết quả và báo đang đợi
-        resultBox.style.display = 'block';
-        finalLinkTxt.innerText = "Vui lòng đợi trong 2s-3s...";
-        visitBtn.style.pointerEvents = "none";
+        resTxt.innerText = "Vui lòng đợi trong 2s-3s...";
         visitBtn.style.opacity = "0.5";
+        visitBtn.style.pointerEvents = "none";
 
         try {
-            // Gọi đến API server.js bạn đã tạo
-            const response = await fetch(`/api/bypass?url=${encodeURIComponent(input.value)}`);
+            // Sử dụng window.location.origin để tự động khớp với link Render
+            const response = await fetch(`${window.location.origin}/api/bypass?url=${encodeURIComponent(input)}`);
             const data = await response.json();
 
-            // Giả lập thời gian chờ 2.5s cho đúng yêu cầu của bạn
             setTimeout(() => {
-                if (data.success) {
-                    finalLinkTxt.innerText = data.link;
+                if(data.success) {
+                    resTxt.innerText = data.link;
                     visitBtn.href = data.link;
-                    visitBtn.style.pointerEvents = "auto";
                     visitBtn.style.opacity = "1";
+                    visitBtn.style.pointerEvents = "auto";
                 } else {
-                    finalLinkTxt.innerText = "Lỗi: " + data.message;
+                    resTxt.innerText = data.message;
                 }
             }, 2500);
-
-        } catch (error) {
-            setTimeout(() => {
-                finalLinkTxt.innerText = "Lỗi kết nối Server!";
-            }, 2500);
+        } catch(e) {
+            resTxt.innerText = "Lỗi kết nối Server!";
         }
     }
-
-    function copyLink() {
-        const text = document.getElementById('finalLink').innerText;
-        if (text.includes('http')) {
-            navigator.clipboard.writeText(text);
-            alert("Đã sao chép link gốc!");
+    function copy() {
+        const t = document.getElementById('linkRes').innerText;
+        if(t.includes('http')) {
+            navigator.clipboard.writeText(t);
+            alert("Đã copy link thành công!");
         }
     }
 </script>
-
 </body>
-                </html>
-                                      
+</html>
