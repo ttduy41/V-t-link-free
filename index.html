@@ -6,84 +6,75 @@
     <title>Vượt Link4m Free V1</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg: #080d14; --card: #0f1722; --cyan: #00e5ff; --blue: #1e3a8a; --dim: #94a3b8; }
+        :root { --bg: #080d14; --card: #0f1722; --cyan: #00e5ff; --blue: #1e3a8a; --dim: #94a3b8; --green: #4ade80; --red: #ff4d4d; }
         body { background: var(--bg); color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .card { width: 350px; background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid #1e293b; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; }
-        .status { background: rgba(34, 197, 94, 0.1); color: #4ade80; padding: 8px 15px; border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(34, 197, 94, 0.3); margin-bottom: 20px; display: inline-block; }
+        .status-tag { background: rgba(34, 197, 94, 0.1); color: var(--green); padding: 8px 15px; border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(34, 197, 94, 0.3); margin-bottom: 20px; display: inline-block; }
         .input-box { background: #0a0f18; border: 1px solid #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 10px; }
         input { background: transparent; border: none; color: var(--cyan); width: 100%; text-align: center; outline: none; font-size: 0.9rem; }
-        .btn-bypass { background: var(--cyan); color: black; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.9rem; }
+        .btn-bypass { background: var(--cyan); color: black; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .res-area { text-align: left; margin-top: 20px; }
+        .res-label { font-size: 0.7rem; color: var(--dim); display: flex; justify-content: space-between; }
         .res-box { background: #0a0f18; border: 1px solid #1e293b; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
         #linkRes { color: var(--cyan); font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
         .btn-visit { background: var(--blue); color: white; text-decoration: none; display: block; padding: 15px; border-radius: 12px; font-weight: bold; text-align: center; opacity: 0.5; pointer-events: none; transition: 0.3s; }
-        .guide { text-align: left; border-top: 1px solid #1e293b; margin-top: 20px; padding-top: 15px; }
-        .guide b { color: #f97316; font-size: 0.8rem; }
-        .step { font-size: 0.7rem; color: var(--dim); margin-top: 5px; }
+        #statusText { font-weight: bold; font-size: 0.7rem; }
     </style>
 </head>
 <body>
 <div class="card">
     <div class="header"><span>Vượt Link4m Free V1</span><i class="fas fa-bolt" style="color:var(--cyan)"></i></div>
-    <div class="status">● Xác thực thành công ● Link hợp lệ</div>
+    <div class="status-tag">● Xác thực thành công ● Link hợp lệ</div>
     <div class="input-box"><input type="text" id="urlInput" placeholder="DÁN LINK TẠI ĐÂY"></div>
     <button class="btn-bypass" onclick="handleBypass()"><i class="fas fa-magic"></i> DÁN LINK & VƯỢT NGAY</button>
-    
     <div class="res-area">
-        <div style="font-size:0.7rem; color:var(--dim)">Link đã vượt thành công:</div>
-        <div class="res-box">
-            <span id="linkRes">Đang đợi link...</span>
-            <i class="fas fa-copy" onclick="copy()" style="color:var(--cyan); cursor:pointer; margin-left:10px;"></i>
-        </div>
+        <div class="res-label"><span>Link đã vượt:</span><span id="statusText"></span></div>
+        <div class="res-box"><span id="linkRes">Đang đợi link...</span><i class="fas fa-copy" onclick="copy()" style="color:var(--cyan); cursor:pointer;"></i></div>
         <a id="visitBtn" href="#" target="_blank" class="btn-visit">TRUY CẬP LINK GỐC</a>
     </div>
-
-    <div class="guide">
-        <b><i class="fas fa-info-circle"></i> HƯỚNG DẪN SỬ DỤNG</b>
-        <div class="step">01. Dán link cần vượt vào ô nhập liệu.</div>
-        <div class="step">02. Đợi AI xử lý hệ thống trong 2s-3s.</div>
-        <div class="step">03. Nhấn Truy Cập Link để nhận kết quả.</div>
-    </div>
 </div>
-
 <script>
     async function handleBypass() {
         const input = document.getElementById('urlInput').value;
         const resTxt = document.getElementById('linkRes');
+        const statusTxt = document.getElementById('statusText');
         const visitBtn = document.getElementById('visitBtn');
 
-        if(!input) return alert("Vinh ơi dán link vào đã!");
-
+        if(!input) return alert("Dán link đi Vinh!");
         resTxt.innerText = "Vui lòng đợi trong 2s-3s...";
+        statusTxt.innerText = "";
         visitBtn.style.opacity = "0.5";
         visitBtn.style.pointerEvents = "none";
 
         try {
-            // Sử dụng window.location.origin để tự động khớp với link Render
+            // Tự động nhận diện server Render mà không cần dán link thủ công
             const response = await fetch(`${window.location.origin}/api/bypass?url=${encodeURIComponent(input)}`);
             const data = await response.json();
 
             setTimeout(() => {
                 if(data.success) {
                     resTxt.innerText = data.link;
+                    statusTxt.innerText = "VƯỢT THÀNH CÔNG ✅";
+                    statusTxt.style.color = "#4ade80";
                     visitBtn.href = data.link;
                     visitBtn.style.opacity = "1";
                     visitBtn.style.pointerEvents = "auto";
                 } else {
-                    resTxt.innerText = data.message;
+                    resTxt.innerText = "Không lấy được link!";
+                    statusTxt.innerText = "VƯỢT THẤT BẠI ❌";
+                    statusTxt.style.color = "#ff4d4d";
                 }
             }, 2500);
         } catch(e) {
             resTxt.innerText = "Lỗi kết nối Server!";
+            statusTxt.innerText = "VƯỢT THẤT BẠI ❌";
+            statusTxt.style.color = "#ff4d4d";
         }
     }
     function copy() {
         const t = document.getElementById('linkRes').innerText;
-        if(t.includes('http')) {
-            navigator.clipboard.writeText(t);
-            alert("Đã copy link thành công!");
-        }
+        if(t.includes('http')) { navigator.clipboard.writeText(t); alert("Đã copy!"); }
     }
 </script>
 </body>
