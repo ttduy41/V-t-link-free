@@ -3,79 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vượt Link4m Free V1</title>
+    <title>Lấy Mã Link4m Siêu Tốc</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg: #080d14; --card: #0f1722; --cyan: #00e5ff; --blue: #1e3a8a; --dim: #94a3b8; --green: #4ade80; --red: #ff4d4d; }
-        body { background: var(--bg); color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { width: 350px; background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid #1e293b; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; }
-        .status-tag { background: rgba(34, 197, 94, 0.1); color: var(--green); padding: 8px 15px; border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(34, 197, 94, 0.3); margin-bottom: 20px; display: inline-block; }
-        .input-box { background: #0a0f18; border: 1px solid #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 10px; }
-        input { background: transparent; border: none; color: var(--cyan); width: 100%; text-align: center; outline: none; font-size: 0.9rem; }
-        .btn-bypass { background: var(--cyan); color: black; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .res-area { text-align: left; margin-top: 20px; }
-        .res-label { font-size: 0.7rem; color: var(--dim); display: flex; justify-content: space-between; }
-        .res-box { background: #0a0f18; border: 1px solid #1e293b; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
-        #linkRes { color: var(--cyan); font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-        .btn-visit { background: var(--blue); color: white; text-decoration: none; display: block; padding: 15px; border-radius: 12px; font-weight: bold; text-align: center; opacity: 0.5; pointer-events: none; transition: 0.3s; }
-        #statusText { font-weight: bold; font-size: 0.7rem; }
+        :root { --bg: #080d14; --card: #0f1722; --cyan: #00e5ff; --dim: #94a3b8; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { width: 360px; background: var(--card); border-radius: 24px; padding: 30px; border: 1px solid #1e293b; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+        .header { display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: bold; font-size: 1.2rem; margin-bottom: 25px; color: var(--cyan); }
+        .input-group { background: #0a0f18; border: 1px solid #1e293b; border-radius: 15px; padding: 15px; margin-bottom: 15px; }
+        input { background: transparent; border: none; color: white; width: 100%; text-align: center; outline: none; font-size: 0.9rem; }
+        .btn-main { background: var(--cyan); color: #000; border: none; width: 100%; padding: 16px; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .btn-main:hover { transform: scale(1.02); box-shadow: 0 0 15px var(--cyan); }
+        .result-box { margin-top: 25px; display: none; text-align: left; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .code-display { background: #1a2432; border: 2px dashed var(--cyan); border-radius: 12px; padding: 20px; text-align: center; margin: 10px 0; position: relative; }
+        #codeValue { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; color: #fff; }
+        .btn-copy { background: #1e3a8a; color: white; border: none; width: 100%; padding: 12px; border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+        .guide { font-size: 0.75rem; color: var(--dim); margin-top: 20px; line-height: 1.5; border-top: 1px solid #1e293b; padding-top: 15px; }
     </style>
 </head>
 <body>
-<div class="card">
-    <div class="header"><span>Vượt Link4m Free V1</span><i class="fas fa-bolt" style="color:var(--cyan)"></i></div>
-    <div class="status-tag">● Xác thực thành công ● Link hợp lệ</div>
-    <div class="input-box"><input type="text" id="urlInput" placeholder="DÁN LINK TẠI ĐÂY"></div>
-    <button class="btn-bypass" onclick="handleBypass()"><i class="fas fa-magic"></i> DÁN LINK & VƯỢT NGAY</button>
-    <div class="res-area">
-        <div class="res-label"><span>Link đã vượt:</span><span id="statusText"></span></div>
-        <div class="res-box"><span id="linkRes">Đang đợi link...</span><i class="fas fa-copy" onclick="copy()" style="color:var(--cyan); cursor:pointer;"></i></div>
-        <a id="visitBtn" href="#" target="_blank" class="btn-visit">TRUY CẬP LINK GỐC</a>
+    <div class="card">
+        <div class="header"><i class="fas fa-key"></i> <span>LẤY MÃ LINK4M</span></div>
+        <div class="input-group">
+            <input type="text" id="urlInput" placeholder="Dán link Link4m vào đây...">
+        </div>
+        <button class="btn-main" onclick="getCode()"><i class="fas fa-bolt"></i> LẤY MÃ NGAY</button>
+
+        <div id="resultArea" class="result-box">
+            <span style="font-size: 0.8rem; color: var(--dim);">Mã xác nhận của bạn:</span>
+            <div class="code-display">
+                <span id="codeValue">......</span>
+            </div>
+            <button class="btn-copy" onclick="copyCode()"><i class="far fa-copy"></i> SAO CHÉP MÃ</button>
+        </div>
+
+        <div class="guide">
+            <i class="fas fa-info-circle"></i> <b>Hướng dẫn:</b><br>
+            Copy mã bên trên và dán vào ô "Nhập mã" tại trang Link4m để tiếp tục.
+        </div>
     </div>
-</div>
-<script>
-    async function handleBypass() {
-        const input = document.getElementById('urlInput').value;
-        const resTxt = document.getElementById('linkRes');
-        const statusTxt = document.getElementById('statusText');
-        const visitBtn = document.getElementById('visitBtn');
 
-        if(!input) return alert("Dán link đi Vinh!");
-        resTxt.innerText = "Vui lòng đợi trong 2s-3s...";
-        statusTxt.innerText = "";
-        visitBtn.style.opacity = "0.5";
-        visitBtn.style.pointerEvents = "none";
+    <script>
+        async function getCode() {
+            const url = document.getElementById('urlInput').value;
+            const resArea = document.getElementById('resultArea');
+            const codeVal = document.getElementById('codeValue');
 
-        try {
-            // Tự động nhận diện server Render mà không cần dán link thủ công
-            const response = await fetch(`${window.location.origin}/api/bypass?url=${encodeURIComponent(input)}`);
-            const data = await response.json();
+            if(!url) return alert("Vinh ơi, dán link vào đã!");
 
-            setTimeout(() => {
+            resArea.style.display = "block";
+            codeVal.innerText = "Đang quét mã...";
+            
+            try {
+                const response = await fetch(`/api/get-code?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+
                 if(data.success) {
-                    resTxt.innerText = data.link;
-                    statusTxt.innerText = "VƯỢT THÀNH CÔNG ✅";
-                    statusTxt.style.color = "#4ade80";
-                    visitBtn.href = data.link;
-                    visitBtn.style.opacity = "1";
-                    visitBtn.style.pointerEvents = "auto";
+                    codeVal.innerText = data.code;
                 } else {
-                    resTxt.innerText = "Không lấy được link!";
-                    statusTxt.innerText = "VƯỢT THẤT BẠI ❌";
-                    statusTxt.style.color = "#ff4d4d";
+                    codeVal.innerText = "LỖI RỒI!";
+                    alert(data.message);
                 }
-            }, 2500);
-        } catch(e) {
-            resTxt.innerText = "Lỗi kết nối Server!";
-            statusTxt.innerText = "VƯỢT THẤT BẠI ❌";
-            statusTxt.style.color = "#ff4d4d";
+            } catch (e) {
+                codeVal.innerText = "LỖI KẾT NỐI!";
+            }
         }
-    }
-    function copy() {
-        const t = document.getElementById('linkRes').innerText;
-        if(t.includes('http')) { navigator.clipboard.writeText(t); alert("Đã copy!"); }
-    }
-</script>
+
+        function copyCode() {
+            const code = document.getElementById('codeValue').innerText;
+            if(code && code !== "Đang quét mã..." && code !== "LỖI RỒI!") {
+                navigator.clipboard.writeText(code);
+                alert("Đã sao chép mã: " + code);
+            }
+        }
+    </script>
 </body>
 </html>
