@@ -5,21 +5,19 @@ const path = require('path');
 
 const app = express();
 app.use(cors());
-
-// Serve file index.html khi truy cập trang chủ
 app.use(express.static(__dirname));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// API Bypass siêu tốc
+// API xử lý vượt link siêu tốc
 app.get('/api/bypass', async (req, res) => {
     const targetUrl = req.query.url;
-    if (!targetUrl) return res.json({ success: false, message: "Chưa có link Vinh ơi!" });
+    if (!targetUrl) return res.json({ success: false });
 
     try {
-        // Sử dụng hệ thống API ổn định để bypass trong 2s
+        // AI gửi request ngầm để lấy link gốc trong 2s
         const response = await axios.get(`https://api.bypass.vip/bypass?url=${encodeURIComponent(targetUrl)}`, {
             timeout: 8000
         });
@@ -27,14 +25,12 @@ app.get('/api/bypass', async (req, res) => {
         if (response.data && response.data.status === "success") {
             res.json({ success: true, link: response.data.destination });
         } else {
-            // Backup logic nếu API chính bận
-            res.json({ success: false, message: "Hệ thống đang quá tải, thử lại sau 2s!" });
+            res.json({ success: false });
         }
     } catch (error) {
-        // Trả về một link mẫu nếu server đang bảo trì để bạn test giao diện
-        res.json({ success: true, link: "https://vinh-bypass-thanh-cong.com" });
+        res.json({ success: false });
     }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`AI đang chạy trên port ${PORT}`));
+app.listen(PORT, () => console.log('AI System Online!'));
