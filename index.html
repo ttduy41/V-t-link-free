@@ -4,213 +4,326 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vượt Link4m Free V1</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #0b111b;
-            --card-bg: #151c27;
-            --accent-blue: #00d4ff;
-            --text-gray: #a0aab8;
+            --bg-body: #080d14;
+            --bg-card: #0f1722;
+            --accent-cyan: #00e5ff;
+            --accent-blue: #2563eb;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border-color: #1e293b;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
-        .container {
-            width: 350px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
+        /* Container chính giống Video */
+        .card {
+            width: 360px;
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
+            position: relative;
         }
 
-        .header {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
+        /* Tiêu đề trên cùng */
+        .brand-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .brand-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tag trạng thái xanh lá */
+        .status-container {
+            margin-bottom: 20px;
         }
 
         .status-tag {
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(34, 197, 94, 0.1);
             color: #4ade80;
-            padding: 5px 15px;
+            padding: 6px 16px;
             border-radius: 20px;
             font-size: 0.8rem;
-            border: 1px solid #4ade80;
-            margin-bottom: 20px;
-            display: inline-block;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .input-box {
-            background: #0f1722;
-            border: 1px solid #232d3d;
+        .dot {
+            height: 8px;
+            width: 8px;
+            background-color: #4ade80;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px #4ade80;
+        }
+
+        /* Ô nhập link */
+        .input-wrapper {
+            background: #0a0f18;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 18px;
+            margin-bottom: 12px;
         }
 
         input {
             background: transparent;
             border: none;
-            color: white;
+            color: var(--accent-cyan);
             width: 100%;
             text-align: center;
+            font-size: 0.95rem;
+            font-family: 'monospace';
             outline: none;
-            font-size: 0.9rem;
         }
 
-        .btn-paste {
-            background: var(--accent-blue);
+        input::placeholder {
+            color: #475569;
+        }
+
+        /* Nút Dán Link & Vượt */
+        .btn-action {
+            background: var(--accent-cyan);
             color: #000;
             border: none;
             width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: bold;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
             cursor: pointer;
-            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            transition: 0.3s;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
-        #result-area {
-            display: none;
-            margin-top: 15px;
-            border-top: 1px solid #232d3d;
+        .btn-action:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+        }
+
+        /* Khu vực hiển thị kết quả */
+        #result-box {
+            display: none; /* Ẩn mặc định */
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-align: left;
+            margin-bottom: 8px;
+            margin-left: 5px;
+        }
+
+        .result-container {
+            background: #0a0f18;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+        }
+
+        .link-text {
+            flex: 1;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .copy-icon {
+            color: var(--accent-cyan);
+            cursor: pointer;
+            padding: 5px;
+            transition: 0.2s;
+        }
+
+        .copy-icon:hover {
+            transform: scale(1.2);
+        }
+
+        /* Nút Truy Cập Link màu xanh dương */
+        .btn-visit {
+            background: var(--accent-blue);
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .btn-visit:hover {
+            background: #1d4ed8;
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Hướng dẫn sử dụng */
+        .guide {
+            margin-top: 25px;
+            text-align: left;
+            border-top: 1px solid var(--border-color);
             padding-top: 15px;
         }
 
-        .result-link-container {
+        .guide-title {
+            color: #f97316;
+            font-size: 0.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            background: #0f1722;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            gap: 5px;
         }
 
-        .result-link {
-            flex: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: var(--accent-blue);
-            font-size: 0.8rem;
+        .step {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+            display: flex;
+            gap: 10px;
         }
 
-        .btn-visit {
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 12px;
-            border-radius: 10px;
+        .step span {
+            color: #f97316;
             font-weight: bold;
         }
 
-        .instruction {
-            text-align: left;
-            font-size: 0.75rem;
-            color: var(--text-gray);
-            margin-top: 20px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <i class="fas fa-bolt" style="color: var(--accent-blue);"></i>
-        Vượt Link4m Free V1
+<div class="card">
+    <div class="brand-header">
+        <div class="brand-title">Vượt Link4m Free V1</div>
+        <i class="fas fa-bolt" style="color: var(--accent-cyan);"></i>
     </div>
 
-    <div class="status-tag">● Xác thực thành công</div>
-
-    <div class="input-box">
-        <input type="text" id="linkInput" placeholder="Dán link Link4m cần vượt...">
+    <div class="status-container">
+        <div class="status-tag">
+            <span class="dot"></span> Xác thực thành công ● Link hợp lệ
+        </div>
     </div>
 
-    <button class="btn-paste" onclick="handleBypass()">
-        <i class="fas fa-paste"></i> Dán link & Vượt
+    <div class="input-wrapper">
+        <input type="text" id="linkInput" placeholder="DÁN LINK LINK4M VÀO ĐÂY...">
+    </div>
+
+    <button class="btn-action" onclick="startBypass()">
+        <i class="fas fa-magic"></i> Dán Link & Vượt Ngay
     </button>
 
-    <div id="result-area">
-        <div style="font-size: 0.8rem; color: var(--text-gray); margin-bottom: 5px;">Link đã vượt:</div>
-        <div class="result-link-container">
-            <span id="finalLink" class="result-link">Đang lấy link...</span>
-            <i class="fas fa-copy" style="color: var(--accent-blue); cursor: pointer;" onclick="copyLink()"></i>
+    <div id="result-box">
+        <div class="result-label">Link đã vượt thành công:</div>
+        <div class="result-container">
+            <div id="finalLink" class="link-text">Đang xử lý...</div>
+            <i class="fas fa-copy copy-icon" title="Sao chép" onclick="copyLink()"></i>
         </div>
-        <a id="visitBtn" href="#" target="_blank" class="btn-visit">TRUY CẬP LINK</a>
+        
+        <a id="visitBtn" href="#" target="_blank" class="btn-visit">
+            TRUY CẬP LINK GỐC
+        </a>
     </div>
 
-    <div class="instruction">
-        <div style="color: orange; font-weight: bold; margin-bottom: 5px;">HƯỚNG DẪN:</div>
-        01. Dán link cần vượt vào ô trên.<br>
-        02. Đợi 2-3s để AI xử lý hệ thống.<br>
-        03. Bấm "Truy cập link" để tới trang đích.
+    <div class="guide">
+        <div class="guide-title">
+            <i class="fas fa-info-circle"></i> HƯỚNG DẪN SỬ DỤNG
+        </div>
+        <div class="step"><span>01</span> Mở và dán link cần vượt vào ô nhập liệu.</div>
+        <div class="step"><span>02</span> Đợi AI xử lý hệ thống trong 2s-3s.</div>
+        <div class="step"><span>03</span> Nhấn Truy Cập Link để nhận kết quả.</div>
     </div>
 </div>
 
 <script>
-    async function handleBypass() {
-        const url = document.getElementById('linkInput').value;
-        const resultArea = document.getElementById('result-area');
+    async function startBypass() {
+        const input = document.getElementById('linkInput');
+        const resultBox = document.getElementById('result-box');
         const finalLinkTxt = document.getElementById('finalLink');
         const visitBtn = document.getElementById('visitBtn');
 
-        if (!url) {
-            alert("Vui lòng dán link!");
+        if (!input.value.includes('link4m')) {
+            alert("Vui lòng dán đúng link Link4m!");
             return;
         }
 
-        // Hiện thông báo đợi
-        resultArea.style.display = 'block';
+        // Hiện box kết quả và báo đang đợi
+        resultBox.style.display = 'block';
         finalLinkTxt.innerText = "Vui lòng đợi trong 2s-3s...";
+        visitBtn.style.pointerEvents = "none";
+        visitBtn.style.opacity = "0.5";
 
         try {
-            // Sử dụng một API Bypass trung gian (Ví dụ: bypass.city hoặc linkvertise bypasser)
-            // Lưu ý: Bạn cần một backend hoặc dùng proxy để gọi API này
-            const response = await fetch(`https://api.bypass.vip/bypass?url=${encodeURIComponent(url)}`);
+            // Gọi đến API server.js bạn đã tạo
+            const response = await fetch(`/api/bypass?url=${encodeURIComponent(input.value)}`);
             const data = await response.json();
 
-            if (data.status === "success") {
-                setTimeout(() => {
-                    finalLinkTxt.innerText = data.destination;
-                    visitBtn.href = data.destination;
-                }, 2000); // Giả lập xử lý 2s cho mượt
-            } else {
-                finalLinkTxt.innerText = "Lỗi: Link không hợp lệ hoặc không hỗ trợ.";
-            }
-        } catch (error) {
-            // Demo nếu không có API thật, sẽ trả về kết quả sau 2s
+            // Giả lập thời gian chờ 2.5s cho đúng yêu cầu của bạn
             setTimeout(() => {
-                finalLinkTxt.innerText = "https://trang-dich-cua-ban.com";
-                visitBtn.href = "https://trang-dich-cua-ban.com";
+                if (data.success) {
+                    finalLinkTxt.innerText = data.link;
+                    visitBtn.href = data.link;
+                    visitBtn.style.pointerEvents = "auto";
+                    visitBtn.style.opacity = "1";
+                } else {
+                    finalLinkTxt.innerText = "Lỗi: " + data.message;
+                }
+            }, 2500);
+
+        } catch (error) {
+            setTimeout(() => {
+                finalLinkTxt.innerText = "Lỗi kết nối Server!";
             }, 2500);
         }
     }
 
     function copyLink() {
-        const link = document.getElementById('finalLink').innerText;
-        navigator.clipboard.writeText(link);
-        alert("Đã sao chép link!");
+        const text = document.getElementById('finalLink').innerText;
+        if (text.includes('http')) {
+            navigator.clipboard.writeText(text);
+            alert("Đã sao chép link gốc!");
+        }
     }
 </script>
 
 </body>
-</html>
+                </html>
+                                      
